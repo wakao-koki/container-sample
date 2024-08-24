@@ -28,3 +28,7 @@ phases:
           }
         ]' > imagedefinitions.json
       - echo imagedefinitions.json created.
+
+artifacts:
+  files:
+    - imagedefinitions.json
