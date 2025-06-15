@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    ECR_REPOSITORY: 190623961150.dkr.ecr.us-east-1.amazonaws.com/test-ripo
+    ECR_REPOSITORY: 190623961150.dkr.ecr.us-east-1.amazonaws.com/test-ecr
 phases:
   pre_build:
     commands:
