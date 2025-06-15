@@ -22,7 +22,7 @@ phases:
       - |
         echo '[
           {
-            "name": "conteiner-test-app",
+            "name": "container-test-app",
             "imageUri": "125605020607.dkr.ecr.ap-northeast-1.amazonaws.com/test-registry:latest"
           }
         ]' > imagedefinitions.json
