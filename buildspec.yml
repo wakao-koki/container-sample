@@ -2,29 +2,33 @@ version: 0.2
 
 env:
   variables:
-    ECR_REPOSITORY: 190623961150.dkr.ecr.us-east-1.amazonaws.com
+    ImageName: container-test-app
+    ECR_REGISTRY: 190623961150.dkr.ecr.us-east-1.amazonaws.com
+    ECR_REPOSITORY: test-ecr
 
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPOSITORY
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t container-test-app .
-      - docker tag container-test-app:latest $ECR_REPOSITORY:latest
+      - docker build -t $ImageName .
+      - docker tag $ImageName:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push $ECR_REPOSITORY:latest
+      - docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
       - echo Build completed on `date`
       - echo Creating imagedefinitions.json...
       - |
         echo '[
           {
-            "name": "container-test-app",
-            "imageUri": "'"$ECR_REPOSITORY"':latest"
+            "name": "'"$ImageName"'",
+            "imageUri": "'"$ECR_REGISTRY/$ECR_REPOSITORY:latest"'"
           }
         ]' > imagedefinitions.json
       - echo imagedefinitions.json created.
@@ -32,3 +36,4 @@ phases:
 artifacts:
   files:
     - imagedefinitions.json
+
