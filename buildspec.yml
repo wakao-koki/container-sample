@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    ECR_REPO_NAME: cth-ripo
+    ECR_REPO_NAME: <ご自身のECRリポジトリ名を記載。両側の角カッコを含め削除してください。>
 phases:
   pre_build:
     commands:
@@ -19,9 +19,3 @@ phases:
     commands:
       - docker tag ${ECR_REPO_NAME}:latest ${ECR_IMAGE_URI}
       - docker push ${ECR_IMAGE_URI}
-
-      - printf '[{"name":"code-nginx-contaier-name","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
-        
-artifacts:
-  files:
-    - imagedefinitions.json
